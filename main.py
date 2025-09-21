@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
 
-
-def diff(iterable):
-    a, b = iterable
-    return a - b
+import collections
 
 if __name__ == "__main__":
     with open("input.txt", "r", encoding="utf-8") as f:
-        print(
-            sum(
-                map(
-                    abs,
-                    map(
-                        diff,
-                        zip(
-                            *(
-                                map(
-                                    sorted,
-                                    map(
-                                        list,
-                                        zip(*(map(int, line.split()) for line in f)),
-                                    ),
-                                )
-                            )
-                        ),
-                    ),
-                )
-            )
+        left, right = map(
+            list,
+            zip(*(map(int, line.split()) for line in f)),
         )
+        r_hist = dict(collections.Counter(right)) 
+        print(sum(key * r_hist[key] for key in left if key in r_hist))
